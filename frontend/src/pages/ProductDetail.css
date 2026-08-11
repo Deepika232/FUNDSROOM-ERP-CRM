@@ -1,0 +1,179 @@
+.page-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.page-content {
+  padding: 2rem;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+.page-header h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #f8fafc;
+}
+
+.sku-text {
+  margin: 0.5rem 0 0 0;
+  color: #94a3b8;
+  font-size: 1rem;
+  font-family: "Courier New", monospace;
+}
+
+.header-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.loading-state {
+  text-align: center;
+  padding: 3rem;
+  color: #94a3b8;
+  font-size: 1.125rem;
+}
+
+.error-banner {
+  background: #dc2626;
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.product-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.detail-card {
+  background: #1e293b;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
+
+.detail-card h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.125rem;
+  color: #e2e8f0;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 0.5rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #334155;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  color: #94a3b8;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.detail-value {
+  color: #f8fafc;
+  font-size: 0.875rem;
+  text-align: right;
+  max-width: 60%;
+  word-break: break-word;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.stock-ok {
+  background: #059669;
+  color: white;
+}
+
+.stock-low {
+  background: #f59e0b;
+  color: white;
+}
+
+.stock-out {
+  background: #dc2626;
+  color: white;
+}
+
+.detail-actions {
+  display: flex;
+  gap: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #334155;
+}
+
+.primary-button,
+.secondary-button,
+.danger-button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.primary-button {
+  background: #3b82f6;
+  color: white;
+}
+
+.primary-button:hover:not(:disabled) {
+  background: #2563eb;
+}
+
+.secondary-button {
+  background: #334155;
+  color: #f8fafc;
+}
+
+.secondary-button:hover:not(:disabled) {
+  background: #475569;
+}
+
+.danger-button {
+  background: #dc2626;
+  color: white;
+}
+
+.danger-button:hover:not(:disabled) {
+  background: #b91c1c;
+}
+
+.danger-button:disabled,
+.primary-button:disabled,
+.secondary-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.price-highlight {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #059669;
+}

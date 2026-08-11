@@ -1,0 +1,53 @@
+# Dependencies
+node_modules/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.cursor/
+
+# TypeScript
+*.tsbuildinfo
+
+# Prisma
+backend/prisma/*.db
+backend/prisma/*.db-journal
+
+# Vite
+frontend/dist/
+
+# Coverage
+coverage/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary test scripts (specific ones)
+backend/audit-database.ts
+backend/check-admin.ts
+backend/reset-admin-password.ts
+backend/verify-login.ts
+backend/cleanup-and-demo-data.ts
+backend/create-role-users.ts
+backend/verify-users.ts
+backend/verify-demo-data.ts

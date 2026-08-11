@@ -1,0 +1,23 @@
+# Environment (local secrets only — NEVER commit)
+.env
+.env.local
+.env.*.local
+
+# Dependencies & build output
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+
+# Test artifacts (local only)
+test-*.ts
+test-*.js
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Prisma local databases (if any SQLite used)
+prisma/*.db
+prisma/*.db-journal
