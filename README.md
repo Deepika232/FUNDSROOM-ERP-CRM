@@ -200,6 +200,121 @@ cd frontend
 npm run dev
 ```
 
+## Docker Deployment
+
+### Prerequisites
+- Docker 20.10+
+- Docker Compose 2.0+
+
+### Quick Start with Docker
+
+1. **Create environment file:**
+```bash
+cp .env.docker.example .env
+# Edit .env with your production values
+```
+
+2. **Start all services:**
+```bash
+docker-compose up -d
+```
+
+This will start:
+- PostgreSQL on port 5432
+- Backend API on port 5000
+- Frontend on port 80
+
+Access the application at `http://localhost`
+
+### Docker Commands
+
+**Start services:**
+```bash
+docker-compose up -d
+```
+
+**Stop services:**
+```bash
+docker-compose down
+```
+
+**Stop and remove volumes (deletes database):**
+```bash
+docker-compose down -v
+```
+
+**View logs:**
+```bash
+# All services
+docker-compose logs -f
+
+# Specific service
+docker-compose logs -f backend
+docker-compose logs -f frontend
+docker-compose logs -f postgres
+```
+
+**Rebuild services:**
+```bash
+docker-compose up -d --build
+```
+
+**Run database migrations in Docker:**
+```bash
+docker-compose exec backend npx prisma migrate deploy
+```
+
+**Access backend container:**
+```bash
+docker-compose exec backend sh
+```
+
+**Access PostgreSQL:**
+```bash
+docker-compose exec postgres psql -U fundsroom -d fundsroom_erp
+```
+
+### Docker Environment Variables
+
+Create a `.env` file in the project root with:
+
+```bash
+# PostgreSQL
+POSTGRES_USER=fundsroom
+POSTGRES_PASSWORD=your_strong_password_here
+POSTGRES_DB=fundsroom_erp
+
+# Backend
+JWT_SECRET=your_64_char_hex_secret_here
+JWT_EXPIRES_IN=7d
+CORS_ORIGIN=http://localhost
+
+# Frontend
+VITE_API_BASE_URL=http://localhost:5000/api
+```
+
+**Important:** Never commit the `.env` file. Use `.env.docker.example` as a template.
+
+### Docker Architecture
+
+- **PostgreSQL:** Official PostgreSQL 15 Alpine image with persistent volume
+- **Backend:** Multi-stage build (build + production) with Node.js 18 Alpine
+- **Frontend:** Multi-stage build (build + nginx) serving static files
+- **Network:** Bridge network for service communication
+- **Health Checks:** All services have health checks for monitoring
+
+### Database Persistence
+
+PostgreSQL data is persisted in a Docker volume named `postgres_data`. This volume survives container restarts but is removed with `docker-compose down -v`.
+
+### Migrations in Docker
+
+When starting with Docker for the first time:
+
+1. The backend container runs Prisma migrations automatically on startup
+2. The database schema is created from `backend/prisma/schema.prisma`
+3. No seed data is included - you'll need to create initial data manually or via API
+
 ## Development Scripts
 
 | Location   | Command              | Description              |
@@ -269,37 +384,43 @@ npm run dev
 
 ### Intended Deployment Architecture
 
-**Backend:**
-- Node.js hosting (Vercel, Render, Railway, or similar)
+**Option 1: Docker Compose (Recommended for Development/Testing)**
+- Full-stack deployment with Docker Compose
+- PostgreSQL, Backend, and Frontend in containers
+- Single command deployment
+- Persistent database volumes
+- Ideal for development, testing, and on-premises deployment
+
+**Option 2: Cloud Hosting (Production)**
+- Backend: Node.js hosting (Vercel, Render, Railway, or similar)
 - PostgreSQL database (supabase, Railway, AWS RDS, or similar)
+- Frontend: Static hosting (Vercel, Netlify, or similar)
 - Environment variables configured via hosting platform
 - Production builds with `npm run build`
 
-**Frontend:**
-- Static hosting (Vercel, Netlify, or similar)
-- Environment variable for API base URL
-- Production builds with `npm run build`
-
 **Current Status:**
-This application is currently configured for local development only. Production deployment requires:
-1. Backend hosting with PostgreSQL database
-2. Frontend hosting with API base URL configuration
-3. Environment variable setup for production
-4. Database migration on production database
-5. HTTPS configuration for secure token transmission
+This application supports both Docker Compose deployment and traditional cloud hosting. Choose the deployment method based on your requirements:
 
-**Deployment Steps (when ready):**
+- **Docker Compose:** Quick setup, ideal for development/testing, on-premises
+- **Cloud Hosting:** Scalable, managed services, ideal for production
+
+**Docker Deployment Steps:**
+1. Copy `.env.docker.example` to `.env` and configure values
+2. Run `docker-compose up -d`
+3. Access application at `http://localhost`
+
+**Cloud Deployment Steps:**
 1. Create production PostgreSQL database
 2. Set environment variables on hosting platform
 3. Deploy backend with `npm run build && npm start`
 4. Deploy frontend with `npm run build`
-5. Run database migrations on production
+5. Run database migrations on production database
 6. Configure CORS for production domain
 7. Update frontend API base URL for production
 
 ## Assumptions
 
-1. **Local Development:** The application is designed primarily for local development with PostgreSQL running locally or via Docker.
+1. **Local Development:** The application supports both local development (npm) and Docker deployment. Docker does not interfere with local npm-based development.
 
 2. **Single Organization:** The application assumes a single organization/tenant model without multi-tenancy requirements.
 
