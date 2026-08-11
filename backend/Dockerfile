@@ -14,7 +14,7 @@ RUN npm ci
 RUN npx prisma generate
 
 # Build TypeScript
-RUN npm run build
+RUN npx tsc
 
 # Production stage
 FROM node:20-alpine AS production
