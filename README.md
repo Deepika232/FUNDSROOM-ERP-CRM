@@ -221,10 +221,12 @@ docker-compose up -d
 
 This will start:
 - PostgreSQL on port 5432
-- Backend API on port 5000
+- Backend API on port 5001 (5000 is used for local development)
 - Frontend on port 80
 
 Access the application at `http://localhost`
+
+**Note:** Docker uses port 5001 for the backend to avoid conflicts with local development (which uses port 5000). If you don't have local development running, you can change the backend port to 5000 in docker-compose.yml.
 
 ### Docker Commands
 
