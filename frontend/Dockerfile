@@ -18,14 +18,14 @@ RUN npm run build
 # Production stage - serve with nginx
 FROM nginx:alpine AS production
 
-# Install wget for health check
-RUN apk add --no-cache wget
+# Install wget for health check and gettext for envsubst
+RUN apk add --no-cache wget gettext
 
 # Copy built files from builder
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copy nginx configuration as template
+COPY nginx.conf /etc/nginx/templates/default.conf.template
 
 # Expose port
 EXPOSE 80
@@ -34,5 +34,5 @@ EXPOSE 80
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Start nginx with template processing
+CMD sh -c "envsubst '\${PORT}' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
