@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import type { ApiErrorResponse } from "../types/auth.types";
 
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ?? "https://fundsroom-backend-d99u0rvjq5pc738lm9ag.onrender.com/api";
+  import.meta.env.VITE_API_BASE_URL ?? "https://fundsroom-backend-o59w.onrender.com/api";
 
 export const TOKEN_STORAGE_KEY = "fundsroom_auth_token";
 export const USER_STORAGE_KEY = "fundsroom_auth_user";
