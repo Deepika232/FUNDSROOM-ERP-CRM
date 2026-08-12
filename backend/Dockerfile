@@ -1,11 +1,16 @@
 # Build stage
 FROM node:20-alpine AS builder
 
+# Build argument for DATABASE_URL (fallback for build time)
+ARG DATABASE_URL=postgresql://postgres:password@localhost:5432/fundsroom_erp?schema=public
+ENV DATABASE_URL=${DATABASE_URL}
+
 WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
 COPY prisma ./prisma/
+COPY prisma.config.ts ./
 COPY tsconfig.json ./
 COPY src ./src/
 
@@ -21,11 +26,16 @@ RUN npx tsc --project .
 # Production stage
 FROM node:20-alpine AS production
 
+# Build argument for DATABASE_URL (fallback for build time)
+ARG DATABASE_URL=postgresql://postgres:password@localhost:5432/fundsroom_erp?schema=public
+ENV DATABASE_URL=${DATABASE_URL}
+
 WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
 COPY prisma ./prisma/
+COPY prisma.config.ts ./
 
 # Install only production dependencies
 RUN npm ci --omit=dev
