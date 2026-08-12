@@ -1,4 +1,4 @@
-# Fundsroom ERP + CRM
+# Fundsroom ERP + CRM.
 
 ## Project Overview
 
